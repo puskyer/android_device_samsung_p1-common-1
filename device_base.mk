@@ -18,8 +18,8 @@
 DEVICE_PACKAGE_OVERLAYS := device/samsung/p1-common/overlay
 
 # Bootanimation
-TARGET_SCREEN_HEIGHT := 600
-TARGET_SCREEN_WIDTH := 1024
+TARGET_SCREEN_HEIGHT := 1024
+TARGET_SCREEN_WIDTH := 600
 
 # These are the hardware-specific configuration files
 PRODUCT_COPY_FILES := \
@@ -126,8 +126,8 @@ PRODUCT_PACKAGES += \
 	libskia_legacy
 
 # rotation
-#PRODUCT_PROPERTY_OVERRIDES += \
-#	ro.sf.hwrotation=90
+PRODUCT_PROPERTY_OVERRIDES += \
+	ro.sf.hwrotation=90
 
 # dpi
 PRODUCT_PROPERTY_OVERRIDES += \
