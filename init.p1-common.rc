@@ -6,6 +6,10 @@ loglevel 9
 # rild doesn't like being killed. (During device encryption.)
     stop ril-daemon
 
+# touch rotate
+# use native framebuffer position
+    write /sys/devices/platform/s3c2440-i2c.2/i2c-2/2-004a/pivot 0
+
 on fs
 
     # mount debugfs
