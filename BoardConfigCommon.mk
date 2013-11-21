@@ -100,6 +100,7 @@ TW_NO_REBOOT_BOOTLOADER         := true
 TW_NO_REBOOT_RECOVERY           := true
 TW_NO_EXFAT                     := true
 TW_INCLUDE_INJECTTWRP           := true
+TWRP_EVENT_LOGGING              := true
 TW_MAX_BRIGHTNESS               := 255
 TW_BRIGHTNESS_PATH              := /sys/devices/platform/s3cfb/cmc623_pwm_bl/backlight/s5p_bl/brightness
 TW_USE_MODEL_HARDWARE_ID_FOR_DEVICE_ID := true
