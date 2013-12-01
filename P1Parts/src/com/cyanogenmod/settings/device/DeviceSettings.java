@@ -51,6 +51,7 @@ public class DeviceSettings extends Activity {
     public static final String KEY_BUTTONS = "buttons_category";
     public static final String KEY_BACKLIGHT_TIMEOUT = "backlight_timeout";
     public static final String KEY_TOUCHSCREEN_CLOCK = "touchscreen_clock";
+    public static final String KEY_FAST_CHARGE = "fast_charge";
 
     ViewPager mViewPager;
     TabsAdapter mTabsAdapter;
@@ -76,6 +77,8 @@ public class DeviceSettings extends Activity {
                 RadioFragmentActivity.class, null);
         mTabsAdapter.addTab(bar.newTab().setText(R.string.category_tvout_title),
                 TVFragmentActivity.class, null);
+        mTabsAdapter.addTab(bar.newTab().setText(R.string.category_usb_title),
+                FastChargeFragmentActivity.class, null);
         if (savedInstanceState != null) {
             bar.setSelectedNavigationItem(savedInstanceState.getInt("tab", 0));
         }
