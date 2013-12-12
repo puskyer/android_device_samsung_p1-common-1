@@ -181,6 +181,10 @@ PRODUCT_PROPERTY_OVERRIDES += ro.config.low_ram=true
 # we have enough storage space to hold precise GC data
 PRODUCT_TAGS += dalvik.gc.type-precise
 
+
+PRODUCT_PROPERTY_OVERRIDES += \
+    dalvik.vm.dexopt-data-only=1
+
 # dalvik
 include frameworks/native/build/phone-hdpi-512-dalvik-heap.mk
 
