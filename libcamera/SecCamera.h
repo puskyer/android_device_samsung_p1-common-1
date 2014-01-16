@@ -85,9 +85,9 @@ namespace android {
 #define S5K4ECGX_SNAPSHOT_WIDTH           2048
 #define S5K4ECGX_SNAPSHOT_HEIGHT          1536
 
-#define S5K4ECGX_POSTVIEW_WIDTH           1280
-#define S5K4ECGX_POSTVIEW_WIDE_WIDTH      1600
-#define S5K4ECGX_POSTVIEW_HEIGHT          960
+#define S5K4ECGX_POSTVIEW_WIDTH           320
+#define S5K4ECGX_POSTVIEW_WIDE_WIDTH      400
+#define S5K4ECGX_POSTVIEW_HEIGHT          240
 #define S5K4ECGX_POSTVIEW_BPP             16
 
 #define S5K4ECGX_THUMBNAIL_WIDTH          320
@@ -99,8 +99,8 @@ namespace android {
 
 #define VGA_PREVIEW_WIDTH               640
 #define VGA_PREVIEW_HEIGHT              480
-#define VGA_SNAPSHOT_WIDTH              1280
-#define VGA_SNAPSHOT_HEIGHT             960
+#define VGA_SNAPSHOT_WIDTH              640
+#define VGA_SNAPSHOT_HEIGHT             480
 
 #define VGA_THUMBNAIL_WIDTH             160
 #define VGA_THUMBNAIL_HEIGHT            120
