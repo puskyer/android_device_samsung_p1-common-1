@@ -129,10 +129,10 @@ BOARD_SEPOLICY_DIRS += \
     device/samsung/p1-common/sepolicy
 
 BOARD_SEPOLICY_UNION += \
-    device.te \
-    domain.te \
+    #device.te \
+    #domain.te \
     file_contexts \
-    mediaserver.te \
+    #mediaserver.te \
     property_contexts \
     pvrsrvinit.te \
     rild.te \
