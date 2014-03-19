@@ -35,6 +35,7 @@ public class ButtonFragmentActivity extends PreferenceFragment {
     private static final String PREF_ENABLED = "1";
     private static final String TAG = "P1Parts_Button";
 
+    private CheckBoxPreference mDisableButtons;
     private ListPreference mBacklightTimeout;
 
     @Override
@@ -44,6 +45,10 @@ public class ButtonFragmentActivity extends PreferenceFragment {
         addPreferencesFromResource(R.xml.button_preferences);
 
         PreferenceScreen prefSet = getPreferenceScreen();
+
+        mDisableButtons = (CheckBoxPreference) findPreference(DeviceSettings.KEY_BUTTONS_DISABLE);
+        mDisableButtons.setEnabled(ToggleCapacitiveKeys.isSupported());
+        mDisableButtons.setOnPreferenceChangeListener(new ToggleCapacitiveKeys());
 
         mBacklightTimeout = (ListPreference) findPreference(DeviceSettings.KEY_BACKLIGHT_TIMEOUT);
         mBacklightTimeout.setEnabled(TouchKeyBacklightTimeout.isSupported());
