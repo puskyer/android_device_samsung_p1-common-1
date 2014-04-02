@@ -19,7 +19,6 @@ package com.cyanogenmod.settings.device;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
@@ -30,38 +29,27 @@ import android.util.Log;
 
 import com.cyanogenmod.settings.device.R;
 
-public class ButtonFragmentActivity extends PreferenceFragment {
+public class OverClockFragmentActivity extends PreferenceFragment {
 
     private static final String PREF_ENABLED = "1";
-    private static final String TAG = "P1Parts_Button";
+    private static final String TAG = "P1Parts_OverClock";
 
-    private CheckBoxPreference mDisableButtons;
-    private ListPreference mBacklightTimeout;
-    private ListPreference mKeyLedBrightness;
+    private ListPreference mGpuOverclock;
+    private ListPreference mTouchscreenClock;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        addPreferencesFromResource(R.xml.button_preferences);
+        addPreferencesFromResource(R.xml.overclock_preferences);
 
         PreferenceScreen prefSet = getPreferenceScreen();
 
-        mDisableButtons = (CheckBoxPreference) findPreference(DeviceSettings.KEY_BUTTONS_DISABLE);
-        mDisableButtons.setEnabled(ToggleCapacitiveKeys.isSupported());
-        mDisableButtons.setOnPreferenceChangeListener(new ToggleCapacitiveKeys());
-
-        mBacklightTimeout = (ListPreference) findPreference(DeviceSettings.KEY_BACKLIGHT_TIMEOUT);
-        mBacklightTimeout.setEnabled(TouchKeyBacklightTimeout.isSupported());
-        mBacklightTimeout.setOnPreferenceChangeListener(new TouchKeyBacklightTimeout());
-        TouchKeyBacklightTimeout.updateSummary(mBacklightTimeout,
-                Integer.parseInt(mBacklightTimeout.getValue()));
-
-        mKeyLedBrightness = (ListPreference) findPreference(DeviceSettings.KEY_LED_BRIGHTNESS);
-        mKeyLedBrightness.setEnabled(KeyLedBrightness.isSupported());
-        mKeyLedBrightness.setOnPreferenceChangeListener(new KeyLedBrightness());
-        KeyLedBrightness.updateSummary(mKeyLedBrightness,
-                Integer.parseInt(mKeyLedBrightness.getValue()));
+        mTouchscreenClock = (ListPreference) findPreference(DeviceSettings.KEY_TOUCHSCREEN_CLOCK);
+        mTouchscreenClock.setEnabled(TouchscreenClock.isSupported());
+        mTouchscreenClock.setOnPreferenceChangeListener(new TouchscreenClock());
+        TouchscreenClock.updateSummary(mTouchscreenClock,
+                Integer.parseInt(mTouchscreenClock.getValue()));
     }
 
     public static void restore(Context context) {
