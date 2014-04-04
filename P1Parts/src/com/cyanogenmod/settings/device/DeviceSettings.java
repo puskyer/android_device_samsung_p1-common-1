@@ -82,8 +82,6 @@ public class DeviceSettings extends Activity {
                 TVFragmentActivity.class, null);
         mTabsAdapter.addTab(bar.newTab().setText(R.string.category_usb_title),
                 FastChargeFragmentActivity.class, null);
-        mTabsAdapter.addTab(bar.newTab().setText(R.string.category_network_traffic),
-                NetworkTrafficFragmentActivity.class, null);
         if (savedInstanceState != null) {
             bar.setSelectedNavigationItem(savedInstanceState.getInt("tab", 0));
         }
