@@ -41,12 +41,32 @@ on fs
     chown system radio /sys/class/sec/switch/usb_sel
     chown system radio /sys/class/sec/switch/uart_sel
 
+    # sensor sysfs permission
+	chown system system /sys/devices/virtual/BMA-dev/accelerometer/calibration
+	chown system system /sys/devices/virtual/lightsensor/switch_cmd/lightsensor_file_cmd
+
+    # mdnie permission
+    chown system system /sys/class/sec/sec_tune_cmc623/color_saturation
+    chown system system /sys/class/sec/sec_tune_cmc623/color_black
+    chown system system /sys/class/sec/sec_tune_cmc623/color_white
+    chown system system /sys/class/sec/sec_tune_cmc623/set_bypass
+    chown system system /sys/class/sec/sec_tune_cmc623/show_regs
+    chown system system /sys/class/sec/sec_tune_cmc623/read_reg
+    chown system system /sys/class/sec/sec_tune_cmc623/set_reg
+
 on post-fs
 
     # now that all filesystems are mounted, load device specific kernel modules
     insmod /system/lib/modules/vibrator.ko   # vibrator
 
 on post-fs-data
+
+    # write value must be consistent with the above properties.
+    # Note that the driver only supports 6 slots, so we have combined some of
+    # the classes into the same memory level; the associated processes of higher
+    # classes will still be killed first.
+    write /sys/module/lowmemorykiller/parameters/adj 0,1,2,4,7,15
+    write /sys/module/lowmemorykiller/parameters/minfree 2048,3072,4096,6144,7168,8192
 
     # create data/gps for GPS demon
     mkdir /data/gps 771 gps system
@@ -64,6 +84,11 @@ on post-fs-data
 
     write /sys/class/input/input3/enable 1  # enable gyro (p1c) & orientation_sensor (p1)
     write /sys/class/input/input4/enable 1  # enable lightsensor-level (p1c) & gyro (p1)
+
+    # ksm
+    write /sys/kernel/mm/ksm/pages_to_scan 100
+    write /sys/kernel/mm/ksm/sleep_millisecs 500
+    write /sys/kernel/mm/ksm/run 1
 
     # make sure that /data/.nvram_net.txt exists during wifi initialization
     start set-macaddr
