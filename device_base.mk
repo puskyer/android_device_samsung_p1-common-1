@@ -149,7 +149,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 PRODUCT_PROPERTY_OVERRIDES += \
 	ro.bq.gpu_to_cpu_unsupported=1 \
-    ro.ksm.default=1 \
 
 # SGX540 is slower with the scissor optimization enabled
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -184,6 +183,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # This is used by ActivityManager.isLowRamDevice()
 PRODUCT_PROPERTY_OVERRIDES += ro.config.low_ram=true
 
+# Enable KSM by default
+PRODUCT_PROPERTY_OVERRIDES += ro.ksm.default=1
+
 # we have enough storage space to hold precise GC data
 PRODUCT_TAGS += dalvik.gc.type-precise
 
@@ -201,6 +203,10 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 # installer
 PRODUCT_COPY_FILES += \
 	device/samsung/p1-common/updater.sh:updater.sh
+
+# init.d scripts
+PRODUCT_COPY_FILES += \
+    device/samsung/p1-common/prebuilt/etc/init.d/00random:system/etc/init.d/00random
 
 # bml_over_mtd
 PRODUCT_COPY_FILES += \
