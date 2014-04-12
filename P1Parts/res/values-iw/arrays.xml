@@ -17,8 +17,8 @@
 -->
 <resources>
   <string-array name="hspa_entries">
-    <item>Kun UMTS</item>
-    <item>Kun HSDPA</item>
+    <item>UMTS בלבד</item>
+    <item>HSDPA בלבד</item>
     <item>HSDPA + HSUPA</item>
   </string-array>
   <string-array name="tvout_system_entries">
@@ -26,15 +26,15 @@
     <item>PAL</item>
   </string-array>
   <string-array name="backlight_timeout_entries">
-    <item>Altid tændt</item>
-    <item>Altid slukket</item>
-    <item>0,5 sekunder</item>
-    <item>1,6 sekunder</item>
-    <item>2 sekunder</item>
-    <item>5 sekunder</item>
-    <item>10 sekunder</item>
-    <item>15 sekunder</item>
-    <item>30 sekunder</item>
+    <item>תמיד דלוק</item>
+    <item>תמיד מוסתר</item>
+    <item>0.5 שניות</item>
+    <item>1.6 שניות</item>
+    <item>2 שניות</item>
+    <item>5 שניות</item>
+    <item>10 שניות</item>
+    <item>15 שניות</item>
+    <item>30 שניות</item>
   </string-array>
   <string-array name="touchscreen_clock_entries">
     <item>400 Mhz</item>

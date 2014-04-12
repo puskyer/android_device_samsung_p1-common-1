@@ -17,8 +17,8 @@
 -->
 <resources>
   <string-array name="hspa_entries">
-    <item>Kun UMTS</item>
-    <item>Kun HSDPA</item>
+    <item>Vain UMTS</item>
+    <item>Vain HSDPA</item>
     <item>HSDPA + HSUPA</item>
   </string-array>
   <string-array name="tvout_system_entries">
@@ -26,19 +26,19 @@
     <item>PAL</item>
   </string-array>
   <string-array name="backlight_timeout_entries">
-    <item>Altid tændt</item>
-    <item>Altid slukket</item>
-    <item>0,5 sekunder</item>
-    <item>1,6 sekunder</item>
-    <item>2 sekunder</item>
-    <item>5 sekunder</item>
-    <item>10 sekunder</item>
-    <item>15 sekunder</item>
-    <item>30 sekunder</item>
+    <item>Aina päällä</item>
+    <item>Aina pois</item>
+    <item>0.5 sekuntia</item>
+    <item>1.6 sekuntia</item>
+    <item>2 sekuntia</item>
+    <item>5 sekuntia</item>
+    <item>10 sekuntia</item>
+    <item>15 sekuntia</item>
+    <item>30 sekuntia</item>
   </string-array>
   <string-array name="touchscreen_clock_entries">
-    <item>400 Mhz</item>
-    <item>800 Mhz</item>
-    <item>1000 Mhz</item>
+    <item>400 MHz</item>
+    <item>800 MHz</item>
+    <item>1000 MHz</item>
   </string-array>
 </resources>
