@@ -17,24 +17,8 @@
 -->
 <resources>
   <string-array name="hspa_entries">
-    <item>Csak UMTS</item>
-    <item>Csak HSDPA</item>
+    <item>UMTS மட்டும்</item>
+    <item>HSDPA Only</item>
     <item>HSDPA + HSUPA</item>
-  </string-array>
-  <string-array name="backlight_timeout_entries">
-    <item>Mindig bekapcsolva</item>
-    <item>Mindig kikapcsolva</item>
-    <item>0,5 másodperc</item>
-    <item>1,6 másodperc</item>
-    <item>2 másodperc</item>
-    <item>5 másodperc</item>
-    <item>10 másodperc</item>
-    <item>15 másodperc</item>
-    <item>30 másodperc</item>
-  </string-array>
-  <string-array name="touchscreen_clock_entries">
-    <item>400 MHz</item>
-    <item>800 MHz</item>
-    <item>1000 MHz</item>
   </string-array>
 </resources>

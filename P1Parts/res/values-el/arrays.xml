@@ -21,12 +21,8 @@
     <item>Μόνο HSDPA</item>
     <item>HSDPA + HSUPA</item>
   </string-array>
-  <string-array name="tvout_system_entries">
-    <item>NTSC</item>
-    <item>PAL</item>
-  </string-array>
   <string-array name="backlight_timeout_entries">
-    <item>Πάντα ενεργό</item>
+    <item>Πάντα ενεργός</item>
     <item>Πάντα ανενεργό</item>
     <item>0.5 δευτερόλεπτα</item>
     <item>1.6 δευτερόλεπτα</item>
