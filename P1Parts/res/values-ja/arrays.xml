@@ -17,24 +17,24 @@
 -->
 <resources>
   <string-array name="hspa_entries">
-    <item>Csak UMTS</item>
-    <item>Csak HSDPA</item>
-    <item>HSDPA + HSUPA</item>
+    <item>UMTSのみ</item>
+    <item>HSDPAのみ</item>
+    <item>HSDPAとHSUPA</item>
   </string-array>
   <string-array name="backlight_timeout_entries">
-    <item>Mindig bekapcsolva</item>
-    <item>Mindig kikapcsolva</item>
-    <item>0,5 másodperc</item>
-    <item>1,6 másodperc</item>
-    <item>2 másodperc</item>
-    <item>5 másodperc</item>
-    <item>10 másodperc</item>
-    <item>15 másodperc</item>
-    <item>30 másodperc</item>
+    <item>常にオン</item>
+    <item>常にオフ</item>
+    <item>0.5 seconds</item>
+    <item>1.6秒</item>
+    <item>2秒</item>
+    <item>5秒</item>
+    <item>10秒</item>
+    <item>15秒</item>
+    <item>30秒</item>
   </string-array>
   <string-array name="touchscreen_clock_entries">
-    <item>400 MHz</item>
-    <item>800 MHz</item>
-    <item>1000 MHz</item>
+    <item>400MHz</item>
+    <item>800MHz</item>
+    <item>1000MHz</item>
   </string-array>
 </resources>

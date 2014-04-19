@@ -39,7 +39,7 @@
   <string name="backlight_timeout_summary_head">Ajusta el retard abans que la retroil·luminació de la tecla tàctil s\'apagui automàticament</string>
   <string name="category_speed_title">Velocitat</string>
   <string name="touchscreen_clock_title">Velocitat del rellotge del panell tàctil</string>
-  <string name="generic_warning_title">Alerta</string>
+  <string name="generic_warning_title">Avís</string>
   <string name="imei_not_sane_title">Avís!</string>
   <string name="imei_not_sane_message">S\'ha detectat un problema amb el teu dispositiu. El número d\'IMEI del teu dispositiu és invàlid. Un nombre d\'IMEI invàlid podria causar problemes de xarxa incloent-hi la incapacitat per trucar a números d\'emergència.</string>
   <string name="imei_not_sane_ok">D\'acord</string>

@@ -28,7 +28,7 @@
   <string-array name="backlight_timeout_entries">
     <item>Sempre encés</item>
     <item>Sempre apagat</item>
-    <item>0.5 segons</item>
+    <item>0,5 segons</item>
     <item>1.6 segons</item>
     <item>2 segons</item>
     <item>5 segons</item>

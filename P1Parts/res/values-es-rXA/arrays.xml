@@ -21,20 +21,16 @@
     <item>Namái HSDPA</item>
     <item>HSDPA + HSUPA</item>
   </string-array>
-  <string-array name="tvout_system_entries">
-    <item>NTSC</item>
-    <item>PAL</item>
-  </string-array>
   <string-array name="backlight_timeout_entries">
     <item>Siempre encesu</item>
     <item>Siempre apagáu</item>
-    <item>Mediu segundu</item>
+    <item>0.5 seconds</item>
     <item>1.6 segundos</item>
-    <item>2 segundos</item>
-    <item>5 segundos</item>
-    <item>10 segundos</item>
-    <item>15 segundos</item>
-    <item>30 segundos</item>
+    <item>2 seconds</item>
+    <item>5 seconds</item>
+    <item>10 seconds</item>
+    <item>15 seconds</item>
+    <item>30 seconds</item>
   </string-array>
   <string-array name="touchscreen_clock_entries">
     <item>400 Mhz</item>

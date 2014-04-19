@@ -21,13 +21,9 @@
     <item>Только HSDPA</item>
     <item>HSDPA + HSUPA</item>
   </string-array>
-  <string-array name="tvout_system_entries">
-    <item>NTSC</item>
-    <item>PAL</item>
-  </string-array>
   <string-array name="backlight_timeout_entries">
-    <item>Вкл. постоянно</item>
-    <item>Не показывать</item>
+    <item>Всегда вкл.</item>
+    <item>Всегда выкл.</item>
     <item>0,5 секунды</item>
     <item>1,6 секунды</item>
     <item>2 секунды</item>
