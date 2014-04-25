@@ -17,20 +17,20 @@
 -->
 <resources>
   <string-array name="hspa_entries">
-    <item>Només UMTS</item>
-    <item>Només HSDPA</item>
+    <item>Tik UMTS</item>
+    <item>Tik HSDPA</item>
     <item>HSDPA + HSUPA</item>
   </string-array>
   <string-array name="backlight_timeout_entries">
-    <item>Sempre encés</item>
-    <item>Sempre apagat</item>
-    <item>0,5 segons</item>
-    <item>1.6 segons</item>
-    <item>2 segons</item>
-    <item>5 segons</item>
-    <item>10 segons</item>
-    <item>15 segons</item>
-    <item>30 segons</item>
+    <item>Visada įjungta</item>
+    <item>Visada išjungta</item>
+    <item>0.5 sekundės</item>
+    <item>1.6 sekundės</item>
+    <item>2 sekundės</item>
+    <item>5 sekundės</item>
+    <item>10 sekundžių</item>
+    <item>15 sekundžių</item>
+    <item>30 sekundžių</item>
   </string-array>
   <string-array name="touchscreen_clock_entries">
     <item>400 Mhz</item>
