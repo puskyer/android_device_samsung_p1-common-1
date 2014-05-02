@@ -185,7 +185,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Enable Low Ram Device flag
 # This is used by ActivityManager.isLowRamDevice()
-# PRODUCT_PROPERTY_OVERRIDES += ro.config.low_ram=true
+PRODUCT_PROPERTY_OVERRIDES += ro.config.low_ram=true
 
 # Enable KSM by default
 PRODUCT_PROPERTY_OVERRIDES += ro.ksm.default=1
