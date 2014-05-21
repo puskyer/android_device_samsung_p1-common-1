@@ -15,7 +15,32 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="app_name">進階設定</string>
+  <string name="category_radio_title">無線電</string>
+  <string name="hspa_title_head">HSPA</string>
+  <string name="hspa_summary_head">啟用 HSDPA/HSUPA</string>
+  <string name="category_tvout_title">電視</string>
+  <string name="tvout_enable_head">電視輸出</string>
+  <string name="tvout_enable_summary_nocable">電視輸出線未連接</string>
+  <string name="tvout_enable_summary">電視輸出線已連接，點選以啟用</string>
+  <string name="tvout_enable_summary_on">電視輸出已啟用</string>
+  <string name="tvout_system_head">電視系統</string>
+  <string name="tvout_system_summary">設定電視輸出使用的系統</string>
+  <string name="hdmi_dock_summary_nodock">未連接 HDMI Dock</string>
+  <string name="hdmi_dock_summary">HDMI Dock 已連接，選中以啟用</string>
+  <string name="hdmi_dock_summary_on">HDMI Dock 已啟用</string>
+  <string name="hdmi_dock_head">HDMI Dock</string>
   <string name="category_buttons_title">按鈕</string>
+  <string name="category_capacitive_buttons_title">電容按鈕</string>
+  <string name="capacitive_buttons_title">停用電容按鈕</string>
+  <string name="capacitive_buttons_summary">停用硬電容按鍵燈和觸摸 (包括通知)</string>
+  <string name="backlight_timeout_title_head">背光自動關閉時間</string>
+  <string name="backlight_timeout_summary_head">調整延遲之前，輕觸鍵背光燈會自動關閉</string>
+  <string name="category_speed_title">速度</string>
+  <string name="touchscreen_clock_title">觸控螢幕的時脈速度</string>
+  <string name="generic_warning_title">警告</string>
+  <string name="imei_not_sane_title">警告！</string>
+  <string name="imei_not_sane_message">偵測到您的設備出現問題。您的裝置 IMEI 號碼無效。無效的 IMEI 號碼可能會導致網絡問題，包括無法撥打緊急電話號碼。</string>
+  <string name="imei_not_sane_ok">確定</string>
 </resources>
