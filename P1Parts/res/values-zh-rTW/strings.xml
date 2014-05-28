@@ -33,7 +33,9 @@
   <string name="category_buttons_title">按鈕</string>
   <string name="category_capacitive_buttons_title">電容式按鈕</string>
   <string name="capacitive_buttons_title">停用電容式按鈕</string>
+  <string name="capacitive_buttons_summary">停用實體電容按鈕燈光及觸控 (包括通知)</string>
   <string name="backlight_timeout_title_head">背光自動關閉時間</string>
+  <string name="backlight_timeout_summary_head">調整觸控鍵背光自動關閉前的延遲</string>
   <string name="category_speed_title">速度</string>
   <string name="generic_warning_title">警告</string>
   <string name="imei_not_sane_title">警告！</string>
