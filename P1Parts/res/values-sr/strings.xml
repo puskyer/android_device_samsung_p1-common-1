@@ -30,7 +30,7 @@
   <string name="hdmi_dock_summary_nodock">HDMI није повезан</string>
   <string name="hdmi_dock_summary">HDMI је повезан, проверите да би сте омогућили</string>
   <string name="hdmi_dock_summary_on">HDMI је омогућен</string>
-  <string name="hdmi_dock_head">HDMI Dock</string>
+  <string name="hdmi_dock_head">HDMI Doк</string>
   <string name="category_buttons_title">Дугмићи</string>
   <string name="category_capacitive_buttons_title">Капацитивна дугмад</string>
   <string name="capacitive_buttons_title">Онемогући кампацитивну дугмад</string>
