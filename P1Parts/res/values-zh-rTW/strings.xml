@@ -17,13 +17,14 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="app_name">進階設定</string>
+  <string name="category_radio_title">Radio</string>
   <string name="hspa_title_head">HSPA</string>
   <string name="hspa_summary_head">啟用 HSDPA/HSUPA</string>
   <string name="category_tvout_title">電視</string>
   <string name="tvout_enable_head">電視輸出</string>
   <string name="tvout_enable_summary_nocable">未連接電視輸出線</string>
-  <string name="tvout_enable_summary">已連接電視輸出線，點選以啟用</string>
-  <string name="tvout_enable_summary_on">已啟用電視輸出</string>
+  <string name="tvout_enable_summary">電視輸出線已連接，選中以啟用</string>
+  <string name="tvout_enable_summary_on">電視輸出已啟用</string>
   <string name="tvout_system_head">電視系統</string>
   <string name="tvout_system_summary">設定電視輸出使用的系統</string>
   <string name="hdmi_dock_summary_nodock">未連接 HDMI 座架</string>
@@ -37,6 +38,7 @@
   <string name="backlight_timeout_title_head">背光自動關閉時間</string>
   <string name="backlight_timeout_summary_head">調整觸控鍵背光自動關閉前的延遲</string>
   <string name="category_speed_title">速度</string>
+  <string name="touchscreen_clock_title">觸控螢幕的時脈速度</string>
   <string name="generic_warning_title">警告</string>
   <string name="imei_not_sane_title">警告！</string>
   <string name="imei_not_sane_message">裝置發生問題。您裝置的 IMEI 碼是無效的。無效的 IMEI 碼可能會導致網路問題，包括無法撥打緊急號碼。</string>

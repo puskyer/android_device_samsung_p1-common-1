@@ -16,7 +16,7 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="app_name">Ajustaments avançats</string>
+  <string name="app_name">Configuració avançada</string>
   <string name="category_radio_title">Ràdio</string>
   <string name="hspa_title_head">HSPA</string>
   <string name="hspa_summary_head">Habilita HSDPA/HSUPA</string>
