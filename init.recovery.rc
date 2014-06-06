@@ -1,10 +1,40 @@
 import usb.rc # Renamed init.p1.usb.rc, we can't use init*.rc because the build script will delete it
 
+on init
+
+    export PATH /sbin
+    export LD_LIBRARY_PATH .:/sbin
+
+on fs
+
+    # mount /system
+    mount yaffs2 mtd@system /system
+
+on post-fs
+
+	# vibrator
+	insmod /system/lib/modules/vibrator.ko
+
+	# disable lpm
+	write /sys/class/power_supply/battery/charging_mode_booting 0
+
+    # touch rotate
+    write /sys/devices/platform/s3c2440-i2c.2/i2c-2/2-004a/pivot 0
+
+    # led timeout: 10 seconds
+	write /sys/devices/platform/s3c2440-i2c.2/i2c-2/2-004a/leds_timeout 10000
+
+	# led brightness: 3mA
+	write /sys/devices/platform/s3c2440-i2c.2/i2c-2/2-004a/brightness 3
+
+	# touch clock: 400MHz
+	write /sys/devices/platform/s3c2440-i2c.2/i2c-2/2-004a/cpufreq_lock 0
+
+	# legacy symlink
+    rmdir /external_sd
+    symlink /storage/sdcard1 /external_sd
+
 on boot
     # mass_storage support
     setprop sys.usb.config mass_storage,adb
 
-on init
-    # legacy symlink
-    rmdir /external_sd
-    symlink /storage/sdcard1 /external_sd
