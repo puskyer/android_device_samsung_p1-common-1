@@ -1,5 +1,9 @@
 import usb.rc # Renamed init.p1.usb.rc, we can't use init*.rc because the build script will delete it
 
+on boot
+    # mass_storage support
+    setprop sys.usb.config mass_storage,adb
+
 on init
 
     export PATH /sbin
@@ -33,8 +37,3 @@ on post-fs
 	# legacy symlink
     rmdir /external_sd
     symlink /storage/sdcard1 /external_sd
-
-on boot
-    # mass_storage support
-    setprop sys.usb.config mass_storage,adb
-
