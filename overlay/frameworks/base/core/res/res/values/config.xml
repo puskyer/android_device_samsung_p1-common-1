@@ -199,5 +199,8 @@
     <bool name="config_enableLockScreenTranslucentDecor">true</bool>
 
     <bool name="config_enableLockScreenRotation">true</bool>
+    
+    <!-- SD card is hot-pluggable on this device -->
+    <bool name="config_batterySdCardAccessibility">true</bool>
 
 </resources>
