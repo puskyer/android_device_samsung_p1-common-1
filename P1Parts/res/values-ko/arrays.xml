@@ -22,8 +22,8 @@
     <item>HSDPA + HSUPA</item>
   </string-array>
   <string-array name="backlight_timeout_entries">
-    <item>항상</item>
-    <item>항상 해제</item>
+    <item>항상 켜기</item>
+    <item>항상 끄기</item>
     <item>0.5 초</item>
     <item>1.6 초</item>
     <item>2 초</item>

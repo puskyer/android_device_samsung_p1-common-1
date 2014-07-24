@@ -36,7 +36,7 @@
   <string name="capacitive_buttons_title">ハードウェアタッチキーを無効にする</string>
   <string name="capacitive_buttons_summary">ハードウェアタッチキーのライトとタッチ（通知を含む）を無効にする</string>
   <string name="backlight_timeout_title_head">バックライトのタイムアウト</string>
-  <string name="backlight_timeout_summary_head">タッチキーのバックライトが自動的に消灯するまでの時間を調整する</string>
+  <string name="backlight_timeout_summary_head">タッチキーのバックライトが自動的に消灯するまでの遅延を調整する</string>
   <string name="category_speed_title">速度</string>
   <string name="touchscreen_clock_title">タッチスクリーンのクロック速度</string>
   <string name="generic_warning_title">警告</string>
