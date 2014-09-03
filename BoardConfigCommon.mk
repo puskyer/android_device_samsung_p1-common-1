@@ -124,6 +124,9 @@ BOARD_HARDWARE_CLASS := device/samsung/p1-common/cmhw/
 # Dalvik startup with a low memory footprint
 TARGET_ARCH_LOWMEM := true
 
+# Screenrecord
+BOARD_SCREENRECORD_LANDSCAPE_ONLY := true
+
 # SELinux
 BOARD_SEPOLICY_DIRS += \
     device/samsung/p1-common/sepolicy
