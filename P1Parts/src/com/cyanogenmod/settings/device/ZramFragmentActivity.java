@@ -28,7 +28,7 @@ import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.util.Log;
 
-import org.cyanogenmod.device.R;
+import com.cyanogenmod.settings.device.R;
 
 public class ZramFragmentActivity extends PreferenceFragment {
 
