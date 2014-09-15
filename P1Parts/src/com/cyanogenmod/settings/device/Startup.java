@@ -28,6 +28,11 @@ public class Startup extends BroadcastReceiver {
         TouchKeyBacklightTimeout.restore(context);
 		KeyLedBrightness.restore(context);
         FastCharge.restore(context);
+        ZramDisable.restore(context);
+        ZramNumDevice.restore(context);
+        ZramCompStream.restore(context);
+        ZramCompAlgorithm.restore(context);
+        ZramDiskSize.restore(context);
         TouchscreenClock.restore(context);
         Sanity.check(context);
     }

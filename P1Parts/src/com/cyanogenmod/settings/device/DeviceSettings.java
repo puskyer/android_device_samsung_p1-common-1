@@ -53,6 +53,12 @@ public class DeviceSettings extends Activity {
     public static final String KEY_LED_BRIGHTNESS = "key_led_brightness";
     public static final String KEY_TOUCHSCREEN_CLOCK = "touchscreen_clock";
     public static final String KEY_FAST_CHARGE = "fast_charge";
+    public static final String KEY_ZRAM_DISABLE = "zram_disable";
+    public static final String KEY_ZRAM_NUM_DEVICE = "zram_num_device";
+    public static final String KEY_ZRAM_COMP_STREAM = "zram_comp_stream";
+    public static final String KEY_ZRAM_COMP_ALGORITHM = "zram_comp_algorithm";
+    public static final String KEY_ZRAM_DISK_SIZE = "zram_disk_size";
+
 
     ViewPager mViewPager;
     TabsAdapter mTabsAdapter;
