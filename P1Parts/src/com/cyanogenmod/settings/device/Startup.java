@@ -26,7 +26,7 @@ public class Startup extends BroadcastReceiver {
     public void onReceive(final Context context, final Intent bootintent) {
         ToggleCapacitiveKeys.restore(context);
         TouchKeyBacklightTimeout.restore(context);
-		KeyLedBrightness.restore(context);
+	KeyLedBrightness.restore(context);
         FastCharge.restore(context);
         ZramDisable.restore(context);
         ZramNumDevice.restore(context);
