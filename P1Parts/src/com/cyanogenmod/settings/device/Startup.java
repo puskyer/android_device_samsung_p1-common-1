@@ -29,7 +29,6 @@ public class Startup extends BroadcastReceiver {
 		KeyLedBrightness.restore(context);
         FastCharge.restore(context);
         ZramDisable.restore(context);
-        ZramNumDevice.restore(context);
         ZramCompStream.restore(context);
         ZramCompAlgorithm.restore(context);
         ZramDiskSize.restore(context);
