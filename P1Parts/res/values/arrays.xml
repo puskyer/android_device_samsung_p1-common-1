@@ -61,7 +61,6 @@
         <item>30000</item>
     </string-array>
 
-<<<<<<< HEAD:P1Parts/res/values/arrays.xml
     <string-array name="key_led_brightness_entries">
         <item>Disabled (no lights)</item>
         <item>Minimum  (0.5mA - save battery)</item>
