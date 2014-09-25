@@ -29,7 +29,7 @@ public class ZramDisable implements OnPreferenceChangeListener {
     private static final String FILE_DRIVER = "/sys/block/zram0/dev";
 
     public static boolean isSupported() {
-        return (Utils.fileExists(FILE) && Utils.fileExists(FILE_DRIVER));
+        return (Utils.fileExists(FILE));
     }
 
     public static void restore(Context context) {
