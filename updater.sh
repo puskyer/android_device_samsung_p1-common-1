@@ -1,9 +1,26 @@
-#!/tmp/busybox sh
+#!/sbin/busybox sh
+#
+# Copyright (C) 2008 The Android Open-Source Project
+# Copyright (C) 2012 by Teamhacksung
+# Copyright (C) 2013 OmniROM Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 #
 # Universal Updater Script for Samsung Galaxy Tab 7"
-# (c) 2012 by Teamhacksung
 # Combined GSM & CDMA version
 #
+
+SYSTEM_SIZE='629145600' # 600M
 
 check_mount() {
     local MOUNT_POINT=`/tmp/busybox readlink $1`
@@ -28,9 +45,41 @@ set_log() {
     exec >> $1 2>&1
 }
 
+warn_repartition() {
+    if ! /tmp/busybox test -e /.accept_wipe ; then
+        /tmp/busybox touch /.accept_wipe
+        ui_print ""
+        ui_print "============================================"
+        ui_print "ATTENTION"
+        ui_print ""
+        ui_print "This VERSION uses an incompatible partition layout"
+        ui_print "Your /data will be wiped upon installation"
+        ui_print "So, make your backups (if you want) and then just"
+        ui_print "Run this update.zip again to confirm install"
+        ui_print ""
+        ui_print "ATTENTION"
+        ui_print "============================================"
+        ui_print ""
+        exit 9
+    fi
+    /tmp/busybox rm /.accept_wipe
+}
+
+format_partitions() {
+    /lvm/sbin/lvm lvcreate -L ${SYSTEM_SIZE}B -n system lvpool
+    /lvm/sbin/lvm lvcreate -l 100%FREE -n userdata lvpool
+
+    # format data (/system will be formatted by updater-script)
+    /tmp/make_ext4fs -b 4096 -g 32768 -i 8192 -I 256 -l -16384 -a /data /dev/lvpool/userdata
+
+    # unmount and format datadata
+    busybox umount -l /datadata
+    /tmp/erase_image datadata
+}
+
 fix_package_location() {
     local PACKAGE_LOCATION=$1
-    # Remove leading /mnt
+    # Remove leading /mnt for Samsung recovery
     PACKAGE_LOCATION=${PACKAGE_LOCATION#/mnt}
     # Convert to modern sdcard path
     PACKAGE_LOCATION=`echo $PACKAGE_LOCATION | /tmp/busybox sed -e "s|^/sdcard|/storage/sdcard0|"`
@@ -57,14 +106,14 @@ if /tmp/busybox test "$1" = cdma ; then
     # CDMA mode
     IS_GSM='/tmp/busybox false'
     SD_PART='/dev/block/mmcblk1p1'
+    MMC_PART='/dev/block/mmcblk0p1 /dev/block/mmcblk0p2'
     MTD_SIZE='490733568'
 else
     # GSM mode
     IS_GSM='/tmp/busybox true'
     SD_PART='/dev/block/mmcblk0p1'
-    MTD_SIZE='454557696'
-    EFS_PART=`/tmp/busybox grep efs /proc/mtd | /tmp/busybox awk '{print $1}' | /tmp/busybox sed 's/://g' | /tmp/busybox sed 's/mtd/mtdblock/g'`
-    RADIO_PART=`/tmp/busybox grep radio /proc/mtd | /tmp/busybox awk '{print $1}' | /tmp/busybox sed 's/://g' | /tmp/busybox sed 's/mtd/mtdblock/g'`
+    MMC_PART='/dev/block/mmcblk0p2'
+    MTD_SIZE='442499072'
 fi
 
 # Check if this is a CDMA device with no eMMC
@@ -121,7 +170,7 @@ if /tmp/busybox test -e /dev/block/bml7 ; then
     exit 0
 
 elif /tmp/busybox test `/tmp/busybox cat /sys/class/mtd/mtd2/size` != "$MTD_SIZE" || \
-    /tmp/busybox test `/tmp/busybox cat /sys/class/mtd/mtd2/name` != "system" ; then
+    /tmp/busybox test `/tmp/busybox cat /sys/class/mtd/mtd2/name` != "datadata" ; then
     # we're running on a mtd (old) device
 
     # make sure sdcard is mounted
@@ -130,18 +179,7 @@ elif /tmp/busybox test `/tmp/busybox cat /sys/class/mtd/mtd2/size` != "$MTD_SIZE
     # everything is logged into /sdcard/cyanogenmod_mtd_old.log
     set_log /sdcard/cyanogenmod_mtd_old.log
 
-    if ! /tmp/busybox test -e /cache/.accept_wipe ; then
-        /tmp/busybox touch /cache/.accept_wipe
-        ui_print
-        ui_print "============================================"
-        ui_print "This ROM uses an incompatible partition layout"
-        ui_print "Your /data will be wiped upon installation"
-        ui_print "Run this update.zip again to confirm install"
-        ui_print "============================================"
-        ui_print
-        exit 9
-    fi
-    /tmp/busybox rm /cache/.accept_wipe
+    warn_repartition
 
     # write the package path to sdcard cyanogenmod.cfg
     if /tmp/busybox test -n "$UPDATE_PACKAGE" ; then
@@ -150,7 +188,7 @@ elif /tmp/busybox test `/tmp/busybox cat /sys/class/mtd/mtd2/size` != "$MTD_SIZE
 
     if $IS_GSM ; then
         # make sure efs is mounted
-        check_mount /efs /dev/block/$EFS_PART yaffs2
+        check_mount /efs /dev/block/mtdblock4 yaffs2
 
         # create a backup of efs
         if /tmp/busybox test -e /sdcard/backup/efs ; then
@@ -184,14 +222,26 @@ elif /tmp/busybox test -e /dev/block/mtdblock0 ; then
     # everything is logged into /sdcard/cyanogenmod.log
     set_log /sdcard/cyanogenmod_mtd.log
 
+    # unmount system and data (recovery seems to expect system to be unmounted)
+    /tmp/busybox umount -l /system
+    /tmp/busybox umount -l /data
+
+    # Resize partitions
+    # (For first install, this will get skipped because device doesn't exist)
+    if /tmp/busybox test `busybox blockdev --getsize64 /dev/mapper/lvpool-system` -ne $SYSTEM_SIZE ; then
+        warn_repartition
+        /lvm/sbin/lvm lvremove -f lvpool
+        format_partitions
+    fi
+
     if $IS_GSM ; then
         # create mountpoint for radio partition
         /tmp/busybox mkdir -p /radio
 
         # make sure radio partition is mounted
         if ! /tmp/busybox grep -q /radio /proc/mounts ; then
-            /tmp/busybox umount -l /dev/block/$RADIO_PART
-            if ! /tmp/busybox mount -t yaffs2 /dev/block/$RADIO_PART /radio ; then
+            /tmp/busybox umount -l /dev/block/mtdblock5
+            if ! /tmp/busybox mount -t yaffs2 /dev/block/mtdblock5 /radio ; then
                 /tmp/busybox echo "Cannot mount radio partition."
                 exit 5
             fi
@@ -199,9 +249,9 @@ elif /tmp/busybox test -e /dev/block/mtdblock0 ; then
 
         # if modem.bin doesn't exist on radio partition, format the partition and copy it
         if ! /tmp/busybox test -e /radio/modem.bin ; then
-            /tmp/busybox umount -l /dev/block/$RADIO_PART
+            /tmp/busybox umount -l /dev/block/mtdblock5
             /tmp/erase_image radio
-            if ! /tmp/busybox mount -t yaffs2 /dev/block/$RADIO_PART /radio ; then
+            if ! /tmp/busybox mount -t yaffs2 /dev/block/mtdblock5 /radio ; then
                 /tmp/busybox echo "Cannot copy modem.bin to radio partition."
                 exit 5
             else
@@ -210,7 +260,7 @@ elif /tmp/busybox test -e /dev/block/mtdblock0 ; then
         fi
 
         # unmount radio partition
-        /tmp/busybox umount -l /radio
+        /tmp/busybox umount -l /dev/block/mtdblock5
     fi
 
     if ! /tmp/busybox test -e /sdcard/cyanogenmod.cfg ; then
@@ -220,8 +270,9 @@ elif /tmp/busybox test -e /dev/block/mtdblock0 ; then
         # flash boot image
         /tmp/bml_over_mtd.sh boot 72 reservoir 2004 /tmp/boot.img
 
-        # unmount system (recovery seems to expect system to be unmounted)
-        /tmp/busybox umount -l /system
+        if ! $IS_GSM ; then
+            /tmp/bml_over_mtd.sh recovery 102 reservoir 2004 /tmp/recovery_kernel
+        fi
 
         exit 0
     fi
@@ -232,13 +283,10 @@ elif /tmp/busybox test -e /dev/block/mtdblock0 ; then
     # remove the cyanogenmod.cfg to prevent this from looping
     /tmp/busybox rm -f /sdcard/cyanogenmod.cfg
 
-    # unmount and format system (recovery seems to expect system to be unmounted)
-    # unmount and format data
-    /tmp/busybox umount -l /data
-    /tmp/busybox umount -l /system
-
-    /tmp/make_ext4fs -b 4096 -g 32768 -i 8192 -I 256 -a /data /dev/block/mmcblk0p2
-    /tmp/erase_image system
+    # setup lvm volumes
+    /lvm/sbin/lvm pvcreate $MMC_PART
+    /lvm/sbin/lvm vgcreate lvpool $MMC_PART
+    format_partitions
 
     # restart into recovery so the user can install further packages before booting
     /tmp/busybox touch /cache/.startrecovery
@@ -251,7 +299,7 @@ elif /tmp/busybox test -e /dev/block/mtdblock0 ; then
             /tmp/busybox mkdir -p /efs
 
             if ! /tmp/busybox grep -q /efs /proc/mounts ; then
-                if ! /tmp/busybox mount -t yaffs2 /dev/block/$EFS_PART /efs ; then
+                if ! /tmp/busybox mount -t yaffs2 /dev/block/mtdblock4 /efs ; then
                     /tmp/busybox echo "Cannot mount efs."
                     exit 6
                 fi

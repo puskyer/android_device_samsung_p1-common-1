@@ -1,4 +1,6 @@
+#
 # Copyright (C) 2010 The Android Open Source Project
+# Copyright (C) 2013 OmniROM Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -11,6 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+#
 
 # These is the hardware-specific overlay, which points to the location
 # of hardware-specific resource overrides, typically the frameworks and
@@ -26,6 +29,7 @@ PRODUCT_COPY_FILES := \
 	device/samsung/p1-common/libaudio/audio_policy.conf:system/etc/audio_policy.conf \
 	device/samsung/p1-common/libaudio/audio_effects.conf:system/vendor/etc/audio_effects.conf \
 	device/samsung/p1-common/zram-init.sh:root/sbin/zram-init.sh \
+	device/samsung/p1-common/rootdir/setupdatadata.sh:root/sbin/setupdatadata.sh \
 	device/samsung/p1-common/bt_vendor.conf:system/etc/bluetooth/bt_vendor.conf
 
 # Init files
@@ -41,6 +45,7 @@ PRODUCT_COPY_FILES += \
 
 # Filesystem management tools
 PRODUCT_PACKAGES := \
+    setup_fs \
 	bml_over_mtd
 
 # Lights
@@ -219,7 +224,6 @@ PRODUCT_COPY_FILES += \
 # init.d scripts
 PRODUCT_COPY_FILES += \
     device/samsung/p1-common/prebuilt/etc/init.d/00random:system/etc/init.d/00random \
-    device/samsung/p1-common/prebuilt/etc/init.d/99zram:system/etc/init.d/99zram
 
 # bml_over_mtd
 PRODUCT_COPY_FILES += \
