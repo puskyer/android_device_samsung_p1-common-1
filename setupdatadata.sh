@@ -10,15 +10,15 @@ PATH=/system/bin/:/system/xbin/
 function migrate_datadata {
     # Migrate data from /datadata to /data/data
     if test -d /datadata/com.android.settings ; then
-        busybox mv -f /datadata/* /data/data/
+        /tmp/busybox mv -f /datadata/* /data/data/
         # FIXME: restorecon might not restore the same context as original
         # (remove when busybox has SELinux support)
         restorecon -r /data/data
         touch /data/data/.nodatadata
         rm -r /data/data/lost+found
-        busybox umount /datadata
+        /tmp/busybox umount /datadata
         erase_image datadata
-        busybox mount /datadata
+        /tmp/busybox mount /datadata
     fi
 }
 
@@ -31,13 +31,13 @@ function migrate_cache {
             mkdir -p /data/data2/$1
             chmod 751 /data/data2/$1
             chcon $CONTEXT /data/data2/$1
-            busybox mv -f /data/data/$1/cache /data/data2/$1/
+            /tmp/busybox mv -f /data/data/$1/cache /data/data2/$1/
             # FIXME: restorecon might not restore the same context as original
             # (remove when busybox has SELinux support)
             restorecon -r /data/data2/$1/*
             ln -s /data/data2/$1/cache /data/data/$1/cache
             chown $OWNER.$OWNER /data/data2/$1 /data/data2/$1/cache
-            busybox chown -h $OWNER.$OWNER /data/data/$1/cache
+            /tmp/busybox chown -h $OWNER.$OWNER /data/data/$1/cache
         fi
     else
         # App was removed?
