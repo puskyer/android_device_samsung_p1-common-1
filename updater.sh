@@ -1,4 +1,4 @@
-#!/sbin/busybox sh
+#!/tmp/busybox sh
 #
 # Copyright (C) 2008 The Android Open-Source Project
 # Copyright (C) 2012 by Teamhacksung
@@ -45,9 +45,24 @@ set_log() {
     exec >> $1 2>&1
 }
 
+# ui_print
+OUTFD=$(/tmp/busybox ps | /tmp/busybox grep -v "grep" | /tmp/busybox grep -o -E "/tmp/updater .*" | /tmp/busybox cut -d " " -f 3);
+if /tmp/busybox test -e /tmp/update_binary ; then
+    OUTFD=$(/tmp/busybox ps | /tmp/busybox grep -v "grep" | /tmp/busybox grep -o -E "update_binary(.*)" | /tmp/busybox cut -d " " -f 3);
+fi
+
+ui_print() {
+  if [ $OUTFD != "" ]; then
+    echo "ui_print ${1} " 1>&$OUTFD;
+    echo "ui_print " 1>&$OUTFD;
+  else
+    echo "${1}";
+  fi;
+}
+
 warn_repartition() {
-    if ! /tmp/busybox test -e /.accept_wipe ; then
-        /tmp/busybox touch /.accept_wipe
+    if ! /tmp/busybox test -e /tmp/.accept_wipe ; then
+        /tmp/busybox touch /tmp/.accept_wipe
         ui_print ""
         ui_print "============================================"
         ui_print "ATTENTION"
@@ -62,7 +77,7 @@ warn_repartition() {
         ui_print ""
         exit 9
     fi
-    /tmp/busybox rm /.accept_wipe
+    /tmp/busybox rm -fr /tmp/.accept_wipe
 }
 
 format_partitions() {
@@ -73,7 +88,7 @@ format_partitions() {
     /tmp/make_ext4fs -b 4096 -g 32768 -i 8192 -I 256 -l -16384 -a /data /dev/lvpool/userdata
 
     # unmount and format datadata
-    busybox umount -l /datadata
+    /tmp/busybox umount -l /datadata
     /tmp/erase_image datadata
 }
 
@@ -87,17 +102,6 @@ fix_package_location() {
     echo $PACKAGE_LOCATION
 }
 
-# ui_print by Chainfire
-OUTFD=$(/tmp/busybox ps | /tmp/busybox grep -v "grep" | /tmp/busybox grep -o -E "update_binary(.*)" | /tmp/busybox cut -d " " -f 3);
-ui_print() {
-  if [ $OUTFD != "" ]; then
-    echo "ui_print ${1} " 1>&$OUTFD;
-    echo "ui_print " 1>&$OUTFD;
-  else
-    echo "${1}";
-  fi;
-}
-
 set -x
 export PATH=/:/sbin:/system/xbin:/system/bin:/tmp:$PATH
 
@@ -106,15 +110,31 @@ if /tmp/busybox test "$1" = cdma ; then
     # CDMA mode
     IS_GSM='/tmp/busybox false'
     SD_PART='/dev/block/mmcblk1p1'
-    MMC_PART='/dev/block/mmcblk0p1 /dev/block/mmcblk0p2'
+    MMC_PART1='/dev/block/mmcblk0p1'
     MTD_SIZE='490733568'
 else
     # GSM mode
     IS_GSM='/tmp/busybox true'
     SD_PART='/dev/block/mmcblk0p1'
-    MMC_PART='/dev/block/mmcblk0p2 /dev/block/mmcblk0p3'
+    MMC_PART1='/dev/block/mmcblk0p2'
+    MMC_PART2='/dev/block/mmcblk0p3'
     MTD_SIZE='442499072'
+    EFS_PART=`/tmp/busybox grep efs /proc/mtd | /tmp/busybox awk '{print $1}' | /tmp/busybox sed 's/://g' | /tmp/busybox sed 's/mtd/mtdblock/g'`
+    RADIO_PART=`/tmp/busybox grep radio /proc/mtd | /tmp/busybox awk '{print $1}' | /tmp/busybox sed 's/://g' | /tmp/busybox sed 's/mtd/mtdblock/g'`
 fi
+
+setup_lvm_partitions() {
+    /tmp/busybox dd if=/dev/zero of=$MMC_PART1 bs=1k count=1
+    /tmp/busybox blockdev --rereadpt $MMC_PART1
+
+    /tmp/busybox dd if=/dev/zero of=$MMC_PART2 bs=1k count=1
+    /tmp/busybox blockdev --rereadpt $MMC_PART2
+
+    /lvm/sbin/lvm vgremove -f lvpool
+    /lvm/sbin/lvm lvremove -f lvpool
+    /lvm/sbin/lvm pvcreate $MMC_PART1 $MMC_PART2
+    /lvm/sbin/lvm vgcreate lvpool $MMC_PART1 $MMC_PART2
+}
 
 # Check if this is a CDMA device with no eMMC
 if ! $IS_GSM && /tmp/busybox test `cat /sys/devices/platform/s3c-sdhci.0/mmc_host/mmc0/mmc0:0001/type` != "MMC" ; then
@@ -188,7 +208,7 @@ elif /tmp/busybox test `/tmp/busybox cat /sys/class/mtd/mtd2/size` != "$MTD_SIZE
 
     if $IS_GSM ; then
         # make sure efs is mounted
-        check_mount /efs /dev/block/mtdblock4 yaffs2
+        check_mount /efs /dev/block/$EFS_PART yaffs2
 
         # create a backup of efs
         if /tmp/busybox test -e /sdcard/backup/efs ; then
@@ -228,10 +248,12 @@ elif /tmp/busybox test -e /dev/block/mtdblock0 ; then
 
     # Resize partitions
     # (For first install, this will get skipped because device doesn't exist)
-    if /tmp/busybox test `busybox blockdev --getsize64 /dev/mapper/lvpool-system` -ne $SYSTEM_SIZE ; then
-        warn_repartition
-        /lvm/sbin/lvm lvremove -f lvpool
-        format_partitions
+    if /tmp/busybox test -e /dev/mapper/lvpool-system ; then
+        if /tmp/busybox test `/tmp/busybox blockdev --getsize64 /dev/mapper/lvpool-system` -ne $SYSTEM_SIZE ; then
+            warn_repartition
+            setup_lvm_partitions
+            format_partitions
+        fi
     fi
 
     if $IS_GSM ; then
@@ -240,8 +262,8 @@ elif /tmp/busybox test -e /dev/block/mtdblock0 ; then
 
         # make sure radio partition is mounted
         if ! /tmp/busybox grep -q /radio /proc/mounts ; then
-            /tmp/busybox umount -l /dev/block/mtdblock5
-            if ! /tmp/busybox mount -t yaffs2 /dev/block/mtdblock5 /radio ; then
+            /tmp/busybox umount -l /dev/block/$RADIO_PART
+            if ! /tmp/busybox mount -t yaffs2 /dev/block/$RADIO_PART /radio ; then
                 /tmp/busybox echo "Cannot mount radio partition."
                 exit 5
             fi
@@ -249,9 +271,9 @@ elif /tmp/busybox test -e /dev/block/mtdblock0 ; then
 
         # if modem.bin doesn't exist on radio partition, format the partition and copy it
         if ! /tmp/busybox test -e /radio/modem.bin ; then
-            /tmp/busybox umount -l /dev/block/mtdblock5
+            /tmp/busybox umount -l /dev/block/$RADIO_PART
             /tmp/erase_image radio
-            if ! /tmp/busybox mount -t yaffs2 /dev/block/mtdblock5 /radio ; then
+            if ! /tmp/busybox mount -t yaffs2 /dev/block/$RADIO_PART /radio ; then
                 /tmp/busybox echo "Cannot copy modem.bin to radio partition."
                 exit 5
             else
@@ -260,10 +282,11 @@ elif /tmp/busybox test -e /dev/block/mtdblock0 ; then
         fi
 
         # unmount radio partition
-        /tmp/busybox umount -l /dev/block/mtdblock5
+        /tmp/busybox umount -l /radio
     fi
 
     if ! /tmp/busybox test -e /sdcard/cyanogenmod.cfg ; then
+            /tmp/busybox test -e /dev/mapper/lvpool-system ; then
         # update install - flash boot image then skip back to updater-script
         # (boot image is already flashed for first time install or old mtd upgrade)
 
@@ -284,9 +307,14 @@ elif /tmp/busybox test -e /dev/block/mtdblock0 ; then
     /tmp/busybox rm -f /sdcard/cyanogenmod.cfg
 
     # setup lvm volumes
-    /lvm/sbin/lvm pvcreate $MMC_PART
-    /lvm/sbin/lvm vgcreate lvpool $MMC_PART
-    format_partitions
+    if ! /tmp/busybox test -e /dev/mapper/lvpool-system ; then
+        /tmp/busybox umount -l /cache
+        /tmp/erase_image cache
+        setup_lvm_partitions
+        format_partitions
+    fi
+
+    /tmp/busybox mount -t yaffs2 /dev/block/mtdblock3 /cache
 
     # restart into recovery so the user can install further packages before booting
     /tmp/busybox touch /cache/.startrecovery
@@ -299,7 +327,7 @@ elif /tmp/busybox test -e /dev/block/mtdblock0 ; then
             /tmp/busybox mkdir -p /efs
 
             if ! /tmp/busybox grep -q /efs /proc/mounts ; then
-                if ! /tmp/busybox mount -t yaffs2 /dev/block/mtdblock4 /efs ; then
+                if ! /tmp/busybox mount -t yaffs2 /dev/block/$EFS_PART /efs ; then
                     /tmp/busybox echo "Cannot mount efs."
                     exit 6
                 fi
