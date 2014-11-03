@@ -111,6 +111,7 @@ if /tmp/busybox test "$1" = cdma ; then
     IS_GSM='/tmp/busybox false'
     SD_PART='/dev/block/mmcblk1p1'
     MMC_PART1='/dev/block/mmcblk0p1'
+    MMC_PART2='/dev/block/mmcblk0p2'
     MTD_SIZE='490733568'
 else
     # GSM mode
@@ -285,7 +286,7 @@ elif /tmp/busybox test -e /dev/block/mtdblock0 ; then
         /tmp/busybox umount -l /radio
     fi
 
-    if ! /tmp/busybox test -e /sdcard/cyanogenmod.cfg ; then
+    if ! /tmp/busybox test -e /sdcard/cyanogenmod.cfg && \
             /tmp/busybox test -e /dev/mapper/lvpool-system ; then
         # update install - flash boot image then skip back to updater-script
         # (boot image is already flashed for first time install or old mtd upgrade)
