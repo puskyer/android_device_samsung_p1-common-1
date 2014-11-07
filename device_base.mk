@@ -25,6 +25,7 @@ TARGET_SCREEN_WIDTH := 600
 PRODUCT_COPY_FILES := \
 	device/samsung/p1-common/libaudio/audio_policy.conf:system/etc/audio_policy.conf \
 	device/samsung/p1-common/libaudio/audio_effects.conf:system/vendor/etc/audio_effects.conf \
+	device/samsung/p1-common/setupdatadata.sh:root/sbin/setupdatadata.sh \
 	device/samsung/p1-common/zram-init.sh:root/sbin/zram-init.sh \
 	device/samsung/p1-common/bt_vendor.conf:system/etc/bluetooth/bt_vendor.conf
 
@@ -41,7 +42,8 @@ PRODUCT_COPY_FILES += \
 
 # Filesystem management tools
 PRODUCT_PACKAGES := \
-	bml_over_mtd
+    setup_fs \
+    bml_over_mtd
 
 # Lights
 PRODUCT_PACKAGES += \
@@ -190,7 +192,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Enable Low Ram Device flag
 # This is used by ActivityManager.isLowRamDevice()
-#PRODUCT_PROPERTY_OVERRIDES += ro.config.low_ram=true
+PRODUCT_PROPERTY_OVERRIDES += ro.config.low_ram=true
 
 # Enable KSM by default
 PRODUCT_PROPERTY_OVERRIDES += ro.ksm.default=1
@@ -215,11 +217,6 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 # installer
 PRODUCT_COPY_FILES += \
 	device/samsung/p1-common/updater.sh:updater.sh
-
-# init.d scripts
-PRODUCT_COPY_FILES += \
-    device/samsung/p1-common/prebuilt/etc/init.d/00random:system/etc/init.d/00random \
-    device/samsung/p1-common/prebuilt/etc/init.d/99zram:system/etc/init.d/99zram
 
 # bml_over_mtd
 PRODUCT_COPY_FILES += \
