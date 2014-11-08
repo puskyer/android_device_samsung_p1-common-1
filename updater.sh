@@ -1,7 +1,22 @@
 #!/tmp/busybox sh
 #
+# Copyright (C) 2008 The Android Open-Source Project
+# Copyright (C) 2012 by Teamhacksung
+# Copyright (C) 2013 OmniROM Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
 # Universal Updater Script for Samsung Galaxy Tab 7"
-# (c) 2012 by Teamhacksung
 # Combined GSM & CDMA version
 #
 
@@ -30,19 +45,39 @@ set_log() {
     exec >> $1 2>&1
 }
 
+# ui_print
+OUTFD=$(/tmp/busybox ps | /tmp/busybox grep -v "grep" | /tmp/busybox grep -o -E "/tmp/updater .*" | /tmp/busybox cut -d " " -f 3);
+if /tmp/busybox test -e /tmp/update_binary ; then
+    OUTFD=$(/tmp/busybox ps | /tmp/busybox grep -v "grep" | /tmp/busybox grep -o -E "update_binary(.*)" | /tmp/busybox cut -d " " -f 3);
+fi
+
+ui_print() {
+  if [ $OUTFD != "" ]; then
+    echo "ui_print ${1} " 1>&$OUTFD;
+    echo "ui_print " 1>&$OUTFD;
+  else
+    echo "${1}";
+  fi;
+}
+
 warn_repartition() {
-    if ! /tmp/busybox test -e /.accept_wipe ; then
-        /tmp/busybox touch /.accept_wipe
-        ui_print
+    if ! /tmp/busybox test -e /tmp/.accept_wipe ; then
+        /tmp/busybox touch /tmp/.accept_wipe
+        ui_print ""
         ui_print "============================================"
-        ui_print "This ROM uses an incompatible partition layout"
+        ui_print "ATTENTION"
+        ui_print ""
+        ui_print "This VERSION uses an incompatible partition layout"
         ui_print "Your /data will be wiped upon installation"
+        ui_print "So, make your backups (if you want) and then just"
         ui_print "Run this update.zip again to confirm install"
+        ui_print ""
+        ui_print "ATTENTION"
         ui_print "============================================"
-        ui_print
+        ui_print ""
         exit 9
     fi
-    /tmp/busybox rm /.accept_wipe
+    /tmp/busybox rm -fr /tmp/.accept_wipe
 }
 
 format_partitions() {
@@ -65,17 +100,6 @@ fix_package_location() {
     PACKAGE_LOCATION=`echo $PACKAGE_LOCATION | /tmp/busybox sed -e "s|^/sdcard|/storage/sdcard0|"`
     PACKAGE_LOCATION=`echo $PACKAGE_LOCATION | /tmp/busybox sed -e "s|^/emmc|/storage/sdcard1|"`
     echo $PACKAGE_LOCATION
-}
-
-# ui_print by Chainfire
-OUTFD=$(/tmp/busybox ps | /tmp/busybox grep -v "grep" | /tmp/busybox grep -o -E "update_binary(.*)" | /tmp/busybox cut -d " " -f 3);
-ui_print() {
-  if [ $OUTFD != "" ]; then
-    echo "ui_print ${1} " 1>&$OUTFD;
-    echo "ui_print " 1>&$OUTFD;
-  else
-    echo "${1}";
-  fi;
 }
 
 set -x
@@ -262,7 +286,8 @@ elif /tmp/busybox test -e /dev/block/mtdblock0 ; then
         /tmp/busybox umount -l /radio
     fi
 
-    if ! /tmp/busybox test -e /sdcard/cyanogenmod.cfg ; then
+    if ! /tmp/busybox test -e /sdcard/cyanogenmod.cfg && \
+            /tmp/busybox test -e /dev/mapper/lvpool-system ; then
         # update install - flash boot image then skip back to updater-script
         # (boot image is already flashed for first time install or old mtd upgrade)
 
