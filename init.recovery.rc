@@ -9,6 +9,9 @@ on init
     export PATH /sbin
     export LD_LIBRARY_PATH .:/sbin
 
+  	# touch rotate
+    write /sys/devices/platform/s3c2440-i2c.2/i2c-2/2-004a/pivot 0
+
 on fs
 
     # mount /system
