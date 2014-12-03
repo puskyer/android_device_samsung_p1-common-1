@@ -94,14 +94,6 @@ BOARD_VOLD_EMMC_SHARES_DEV_MAJOR := true
 # Releasetools
 TARGET_RELEASETOOLS_EXTENSIONS := device/samsung/p1-common
 
-# Recovery
-TARGET_USERIMAGES_USE_EXT4 := true
-BOARD_HAS_NO_SELECT_BUTTON := true
-TARGET_RECOVERY_PRE_COMMAND := "echo 1 > /cache/.startrecovery; sync;"
-BOARD_CUSTOM_GRAPHICS := ../../../device/samsung/p1-common/recovery/graphics.c
-BOARD_CUSTOM_RECOVERY_KEYMAPPING := ../../device/samsung/p1-common/recovery/keys.c
-BOARD_USES_BML_OVER_MTD := true
-
 # Samsung EMMC brick bug
 # Already disabled in kernel, but disable again for safety
 BOARD_SUPPRESS_EMMC_WIPE := true
@@ -128,6 +120,23 @@ BOARD_HARDWARE_CLASS := device/samsung/p1-common/cmhw/
 
 # Dalvik startup with a low memory footprint
 TARGET_ARCH_LOWMEM := true
+
+# TWRP
+DEVICE_RESOLUTION := 1024x600
+BOARD_USES_BML_OVER_MTD := true
+TARGET_USERIMAGES_USE_EXT4 := true
+TARGET_RECOVERY_PRE_COMMAND := "echo 1 > /cache/.startrecovery; sync;"
+TARGET_RECOVERY_PIXEL_FORMAT := "RGB_565"
+TW_NO_REBOOT_BOOTLOADER := true
+TW_INCLUDE_INJECTTWRP := true
+TW_USE_MODEL_HARDWARE_ID_FOR_DEVICE_ID := true
+BOARD_HAS_FLIPPED_SCREEN := true
+RECOVERY_TOUCHSCREEN_FLIP_Y := true
+RECOVERY_TOUCHSCREEN_FLIP_X := true
+TW_INTERNAL_STORAGE_PATH := "/sdcard"
+TW_INTERNAL_STORAGE_MOUNT_POINT := "sdcard"
+TW_MAX_BRIGHTNESS := 255
+TW_BRIGHTNESS_PATH := /sys/devices/platform/s3cfb/cmc623_pwm_bl/backlight/s5p_bl/brightness
 
 # Screenrecord
 BOARD_SCREENRECORD_LANDSCAPE_ONLY := true
