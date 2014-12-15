@@ -128,19 +128,19 @@ TARGET_ARCH_LOWMEM := true
 BOARD_SCREENRECORD_LANDSCAPE_ONLY := true
 
 # SELinux
-BOARD_SEPOLICY_DIRS += \
-    device/samsung/p1-common/sepolicy
+# BOARD_SEPOLICY_DIRS += \
+#    device/samsung/p1-common/sepolicy
 
-BOARD_SEPOLICY_UNION += \
-    device.te \
-    domain.te \
-    file_contexts \
-    mediaserver.te \
-    property_contexts \
-    pvrsrvinit.te \
-    rild.te \
-    tvouthack.te \
-    tvoutserver.te
+# BOARD_SEPOLICY_UNION += \
+#    device.te \
+#    domain.te \
+#    file_contexts \
+#    mediaserver.te \
+#    property_contexts \
+#    pvrsrvinit.te \
+#    rild.te \
+#    tvouthack.te \
+#    tvoutserver.te
 
 TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := true
 BOARD_EGL_WORKAROUND_BUG_10194508 := true
