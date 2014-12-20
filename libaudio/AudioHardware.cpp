@@ -246,6 +246,44 @@ AudioStreamOut* AudioHardware::openOutputStream(
     return out.get();
 }
 
+AudioStreamOut* AudioHardware::openOutputStreamWithFlags(
+    uint32_t devices,audio_output_flags_t flags, int *format, uint32_t *channels,
+    uint32_t *sampleRate, status_t *status)
+{
+    sp <AudioStreamOutALSA> out;
+    status_t rc;
+
+    { // scope for the lock
+        Mutex::Autolock lock(mLock);
+
+        // only one output stream allowed
+        if (mOutput != 0) {
+            if (status) {
+                *status = INVALID_OPERATION;
+            }
+            return NULL;
+        }
+
+        out = new AudioStreamOutALSA();
+
+        rc = out->set(this, devices, format, channels, sampleRate);
+        if (rc == NO_ERROR) {
+            mOutput = out;
+        }
+    }
+
+    if (rc != NO_ERROR) {
+        if (out != 0) {
+            out.clear();
+        }
+    }
+    if (status) {
+        *status = rc;
+    }
+
+    return out.get();
+}
+
 void AudioHardware::closeOutputStream(AudioStreamOut* out) {
     sp <AudioStreamOutALSA> spOut;
     sp<AudioStreamInALSA> spIn;
