@@ -18,7 +18,6 @@
 import common
 import os
 
-LOCAL_DIR = os.path.dirname(os.path.abspath(__file__))
 TARGET_DIR = os.getenv('OUT')
 UTILITIES_DIR = os.path.join(TARGET_DIR, 'utilities')
 TARGET_DEVICE = os.getenv('CM_BUILD')
@@ -35,7 +34,7 @@ def FullOTA_Assertions(info):
   info.output_zip.write(os.path.join(UTILITIES_DIR, "flash_image"), "flash_image")
   info.output_zip.write(os.path.join(UTILITIES_DIR, "erase_image"), "erase_image")
   info.output_zip.write(os.path.join(UTILITIES_DIR, "bml_over_mtd"), "bml_over_mtd")
-  info.output_zip.write(os.path.join(LOCAL_DIR, "bml_over_mtd.sh"), "bml_over_mtd.sh")
+  info.output_zip.write(os.path.join(TARGET_DIR, "bml_over_mtd.sh"), "bml_over_mtd.sh")
 
   if TARGET_DEVICE == "p1":
     info.script.AppendExtra(
