@@ -23,6 +23,8 @@ BOARD_USES_GENERIC_AUDIO := false
 
 BOARD_USES_LIBSECRIL_STUB := true
 
+BLOCK_BASED_OTA := false
+
 # ARMv7-A Cortex-A8 architecture
 TARGET_ARCH := arm
 TARGET_CPU_ABI := armeabi-v7a
@@ -39,7 +41,7 @@ TARGET_BOARD_PLATFORM_GPU := POWERVR_SGX540_120
 TARGET_BOOTLOADER_BOARD_NAME := s5pc110
 
 # Non PIE verification
-TARGET_ENABLE_NON_PIE_SUPPORT := true
+TARGET_NEEDS_NON_PIE_SUPPORT := true
 
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true
@@ -131,19 +133,19 @@ TARGET_ARCH_LOWMEM := true
 BOARD_SCREENRECORD_LANDSCAPE_ONLY := true
 
 # SELinux
-BOARD_SEPOLICY_DIRS += \
-    device/samsung/p1-common/sepolicy
+#BOARD_SEPOLICY_DIRS += \
+#    device/samsung/p1-common/sepolicy
 
-BOARD_SEPOLICY_UNION += \
-    device.te \
-    domain.te \
-    file_contexts \
-    mediaserver.te \
-    property_contexts \
-    pvrsrvinit.te \
-    rild.te \
-    tvouthack.te \
-    tvoutserver.te
+#BOARD_SEPOLICY_UNION += \
+#    device.te \
+#    domain.te \
+#    file_contexts \
+#    mediaserver.te \
+#    property_contexts \
+#    pvrsrvinit.te \
+#    rild.te \
+#    tvouthack.te \
+#    tvoutserver.te
 
 TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := true
 BOARD_EGL_WORKAROUND_BUG_10194508 := true
