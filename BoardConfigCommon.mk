@@ -43,6 +43,9 @@ TARGET_BOOTLOADER_BOARD_NAME := s5pc110
 # Non PIE verification
 TARGET_ENABLE_NON_PIE_SUPPORT := true
 
+# legacy mmap behavior 
+BOARD_USES_LEGACY_MMAP := true
+
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_BCM := true
