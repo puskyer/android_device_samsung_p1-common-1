@@ -43,6 +43,9 @@ TARGET_BOOTLOADER_BOARD_NAME := s5pc110
 # Non PIE verification
 TARGET_ENABLE_NON_PIE_SUPPORT := true
 
+# RIL
+BOARD_RIL_CLASS := ../../../hardware/samsung/exynos3/s5pc110/ril/
+
 # legacy mmap behavior 
 BOARD_USES_LEGACY_MMAP := true
 
@@ -138,27 +141,26 @@ TW_USE_MODEL_HARDWARE_ID_FOR_DEVICE_ID := true
 TW_INCLUDE_FB2PNG := true
 TW_FLASH_FROM_STORAGE := true
 TW_NO_PARTITION_SD_CARD := true
+TW_EXCLUDE_SUPERSU := true
 TW_INTERNAL_STORAGE_PATH := "/sdcard"
 TW_INTERNAL_STORAGE_MOUNT_POINT := "sdcard"
 TW_MAX_BRIGHTNESS := 255
 TW_BRIGHTNESS_PATH := /sys/devices/platform/s3cfb/cmc623_pwm_bl/backlight/s5p_bl/brightness
-# Screenrecord
-BOARD_SCREENRECORD_LANDSCAPE_ONLY := true
 
 # SELinux
-BOARD_SEPOLICY_DIRS += \
-    device/samsung/p1-common/sepolicy
+# BOARD_SEPOLICY_DIRS += \
+#    device/samsung/p1-common/sepolicy
 
-BOARD_SEPOLICY_UNION += \
-    device.te \
-    domain.te \
-    file_contexts \
-    mediaserver.te \
-    property_contexts \
-    pvrsrvinit.te \
-    rild.te \
-    tvouthack.te \
-    tvoutserver.te
+# BOARD_SEPOLICY_UNION += \
+#    device.te \
+#    domain.te \
+#    file_contexts \
+#    mediaserver.te \
+#    property_contexts \
+#    pvrsrvinit.te \
+#    rild.te \
+#    tvouthack.te \
+#    tvoutserver.te
 
 TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := true
 BOARD_EGL_WORKAROUND_BUG_10194508 := true

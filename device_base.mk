@@ -41,6 +41,7 @@ PRODUCT_COPY_FILES += \
 
 # Filesystem management tools
 PRODUCT_PACKAGES := \
+    setup_fs \
 	bml_over_mtd
 
 # Lights
@@ -76,6 +77,11 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
 	hwcomposer.s5pc110 \
 	libstagefrighthw
+
+# PVR
+PRODUCT_PACKAGES += \
+    pvrsrvinit \
+    libPVRScopeServices.so
 
 # audio submix
 PRODUCT_PACKAGES += \
