@@ -177,7 +177,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.kernel.android.checkjni=0 \
     dalvik.vm.checkjni=false \
-    dalvik.vm.debug.alloc=0
+    dalvik.vm.debug.alloc=0 \
+    dalvik.vm.dexopt-data-only=1
 
 # Override /proc/sys/vm/dirty_ratio on UMS
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -185,20 +186,16 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Enable Low Ram Device flag
 # This is used by ActivityManager.isLowRamDevice()
-#PRODUCT_PROPERTY_OVERRIDES += ro.config.low_ram=true
-
-# Enable KSM by default
-PRODUCT_PROPERTY_OVERRIDES += ro.ksm.default=1
+PRODUCT_PROPERTY_OVERRIDES += ro.config.low_ram=true
 
 # Disable JIT
 PRODUCT_PROPERTY_OVERRIDES += dalvik.vm.jit.codecachesize=0
 
+# Enable KSM by default
+PRODUCT_PROPERTY_OVERRIDES += ro.ksm.default=1
+
 # we have enough storage space to hold precise GC data
 PRODUCT_TAGS += dalvik.gc.type-precise
-
-
-PRODUCT_PROPERTY_OVERRIDES += \
-    dalvik.vm.dexopt-data-only=1
 
 # dalvik
 include frameworks/native/build/phone-hdpi-512-dalvik-heap.mk
