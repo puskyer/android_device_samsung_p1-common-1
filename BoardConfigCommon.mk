@@ -127,6 +127,9 @@ TARGET_ARCH_LOWMEM := true
 # Screenrecord
 BOARD_SCREENRECORD_LANDSCAPE_ONLY := true
 
+# Don't include live wallpapers, they take too much cpu and ram plus space
+TARGET_EXCLUDE_LIVEWALLPAPERS := true
+
 # SELinux
 BOARD_SEPOLICY_DIRS += \
     device/samsung/p1-common/sepolicy
